@@ -7,7 +7,7 @@ class Product{
         this.nombre = nombre;
         this.precio = precio;
         this.img = img;
-        this.cantidad =1;
+        this.cantidad = 1;
     }
 }
 
@@ -39,6 +39,18 @@ const IPHONE_15_PRO = new Product(12, "Iphone 15 Pro", 1100, "./assets/img/IPHON
 const STOCK = [IPHONE_X, IPHONE_XS_MAX, IPHONE_11, IPHONE_11_PRO, IPHONE_12, IPHONE_12_PRO,IPHONE_13, IPHONE_13_PRO, IPHONE_14, IPHONE_14_PRO, IPHONE_15, IPHONE_15_PRO];
 console.log(STOCK)
 
+const carrito = [];
+
+const carritoJSON = JSON.stringify(carrito);
+
+
+localStorage.setItem("carrito", carritoJSON);
+
+
+const carritoRecuperado = localStorage.getItem("carrito");
+
+
+const carritoObjeto = JSON.parse(carritoRecuperado);
 
 //-------------
 
@@ -62,7 +74,7 @@ const MOSTRAR_PRODUCTOS = () =>{
                 <span class="titulo-item">${producto.nombre}</span>
                 <img src="${producto.img}" class="img-item">
                 <span class="precio-item">${producto.precio}</span>
-                <button class="boton-item">Agregar al Carrito</button>
+                <button class="boton-item" id="boton${producto.id}">Agregar al Carrito</button>
             </div>
         `
 
@@ -114,7 +126,7 @@ const mostrarCarrito= () =>{
                 <span class="titulo-item">${producto.nombre}</span>
                 <img src="${producto.img}" class="img-item">
                 <span class="precio-item">${producto.precio}</span>
-                <button class="boton-item">Agregar al Carrito</button>
+                <button class="boton-item" id="eliminar${producto.id}">Eliminar</button>
             </div>
         `
         contenedorCarrito.appendChild(card);
@@ -131,7 +143,7 @@ const mostrarCarrito= () =>{
 //Funcion eliminar
 
 const eliminarDelCarrito = (id) => {
-    const producto = carrito.find(producto => producto.id === id);
+    const indice = carrito.findIndex(producto => producto.id === id);
     carrito.splice(indice, 1)
     mostrarCarrito()
 }
